@@ -242,7 +242,7 @@ def update_status():
     )
     con.commit()
     con.close()
-    return redirect("/admin")
+    return redirect(f"/admin?key={ADMIN_KEY}")
 
 # -------------------------
 # DELETE ORDER
@@ -263,5 +263,5 @@ def delete_order():
     cur.execute("DELETE FROM orders WHERE id = ?", (order_id,))
     con.commit()
     con.close()
-    return redirect("/admin")
+    return redirect(f"/admin?key={ADMIN_KEY}")
 
