@@ -134,30 +134,37 @@ form.addEventListener("submit", (e) => {
   errorBox.innerHTML = "";
   let errors = [];
 
-    document.querySelectorAll("[data-required]").forEach((el) => {
-        if (!el.value.trim()) {
-            const label = document.querySelector(`label[for="${el.id}"]`);
-            const labelText = label ? label.textContent : "Bu alan";
+  document.querySelectorAll("[data-required]").forEach((el) => {
+    if (!el.value.trim()) {
+      const label = document.querySelector(`label[for="${el.id}"]`);
+      const labelText = label ? label.textContent : "Bu alan";
 
-            errors.push(`"${labelText}" alanı boş bırakılamaz`);
-        }
-    });
+      errors.push(`"${labelText}" alanı boş bırakılamaz`);
+    }
+  });
 
-
-  const limits = PACKAGE_LIMITS;
   const selectedPackage = packageSelect.value;
+  const maxPhotos = limits[selectedPackage];
 
-  if (photoInput.files.length > limits[selectedPackage]) {
+  if (photoInput.files.length > maxPhotos) {
     errors.push(
-      `Seçilen paket için maksimum ${limits[selectedPackage]} fotoğraf yükleyebilirsiniz`
+      `Seçilen paket için maksimum ${maxPhotos} fotoğraf yükleyebilirsiniz`
     );
   }
 
   if (errors.length) {
     e.preventDefault();
     errorBox.innerHTML = errors.join("<br>");
+    return;
   }
+
+  // ✅ HATA YOK → SUCCESS
+  e.preventDefault(); // sayfa yenilenmesin
+
+  form.style.display = "none";
+  document.getElementById("successMessage").style.display = "block";
 });
+
 
 /* Dark / Light toggle */
 const toggle = document.getElementById("themeToggle");
