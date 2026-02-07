@@ -1,6 +1,7 @@
 from flask import Flask, abort, render_template, request, redirect, send_from_directory
 from werkzeug.utils import secure_filename
 import sqlite3, os
+from datetime import datetime, timezone, timedelta
 
 ADMIN_KEY = os.getenv("ADMIN_KEY", "448848")
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
@@ -103,7 +104,22 @@ def render_admin(where=None, params=()):
     query += " ORDER BY created_at DESC"
 
     cur.execute(query, params)
-    orders = cur.fetchall()
+    raw_orders = cur.fetchall()
+
+    TR_TZ = timezone(timedelta(hours=3))
+    orders = []
+
+    for row in raw_orders:
+        row = list(row)
+
+        created_at_utc = datetime.strptime(row[10], "%Y-%m-%d %H:%M:%S")
+        created_at_utc = created_at_utc.replace(tzinfo=timezone.utc)
+
+        created_at_tr = created_at_utc.astimezone(TR_TZ)
+
+        row[10] = created_at_tr.strftime("%d.%m.%Y %H:%M")
+
+        orders.append(row)
 
     cur.execute("SELECT order_id, filename FROM photos")
     photos = cur.fetchall()
