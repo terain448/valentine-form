@@ -55,6 +55,8 @@ def init_db():
         custom_request TEXT,
         password_choice TEXT,
         site_password TEXT,
+        music_choice TEXT,
+        music_detail TEXT,
         contact TEXT,
         status TEXT DEFAULT 'beklemede',
         form_type TEXT,
@@ -79,65 +81,8 @@ init_db()
 # -------------------------
 # FORM
 # -------------------------
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def form():
-    if request.method == "POST":
-        data = request.form
-        files = request.files.getlist("photos")
-
-        con = db()
-        cur = con.cursor()
-
-        cur.execute("""
-        INSERT INTO orders (
-            form_type,
-            order_number,
-            package_name,
-            lover_name,
-            customer_name,
-            message,
-            special_date,
-            custom_request,
-            password_choice,
-            site_password,
-            music_choice,
-            music_detail,
-            contact,
-            status
-        )
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        """, (
-            "valentine",
-            data["order_number"],
-            data["package"],
-            data["lover_name"],
-            data["customer_name"],
-            data["message"],
-            data.get("special_date"),
-            data.get("custom_request"),
-            data.get("password_choice"),
-            data.get("site_password"),
-            data.get("music_choice"),
-            data.get("music_detail"),
-            data["contact"],
-            "beklemede"
-        ))
-
-        order_id = cur.lastrowid
-
-        for f in files:
-            if f.filename:
-                filename = f"{order_id}_{secure_filename(f.filename)}"
-                f.save(os.path.join(UPLOAD_FOLDER, filename))
-                cur.execute(
-                    "INSERT INTO photos (order_id, filename) VALUES (?,?)",
-                    (order_id, filename)
-                )
-
-        con.commit()
-        con.close()
-        return redirect("/")
-
     return render_template("form.html", packages=get_packages())
 
 # -------------------------
@@ -243,6 +188,67 @@ def update_status():
     con.commit()
     con.close()
     return redirect(f"/admin?key={ADMIN_KEY}")
+# -------------------------
+# SUBMIT
+# -------------------------
+@app.route("/submit", methods=["POST"])
+def submit():
+    data = request.form
+    files = request.files.getlist("photos")
+
+    con = db()
+    cur = con.cursor()
+
+    cur.execute("""
+    INSERT INTO orders (
+        form_type,
+        order_number,
+        package_name,
+        lover_name,
+        customer_name,
+        message,
+        special_date,
+        custom_request,
+        password_choice,
+        site_password,
+        music_choice,
+        music_detail,
+        contact,
+        status
+    )
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    """, (
+        "valentine",
+        data.get("order_number"),
+        data.get("package"),
+        data.get("lover_name"),
+        data.get("customer_name"),
+        data.get("message"),
+        data.get("special_date"),
+        data.get("custom_request"),
+        data.get("password_choice"),
+        data.get("site_password"),
+        data.get("music_choice"),
+        data.get("music_detail"),
+        data.get("contact"),
+        "beklemede"
+    ))
+
+    order_id = cur.lastrowid
+
+    for f in files:
+        if f.filename:
+            filename = f"{order_id}_{secure_filename(f.filename)}"
+            f.save(os.path.join(UPLOAD_FOLDER, filename))
+            cur.execute(
+                "INSERT INTO photos (order_id, filename) VALUES (?,?)",
+                (order_id, filename)
+            )
+
+    con.commit()
+    con.close()
+
+    return {"status": "ok"}
 
 # -------------------------
 # DELETE ORDER
