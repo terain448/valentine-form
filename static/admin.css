@@ -1,0 +1,1055 @@
+/* ===========================
+   BATMAN ADMIN THEME
+   =========================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  background:
+    radial-gradient(circle at top, #111 0%, #000 60%);
+  color: #e5e7eb;
+}
+
+/* ===== TITLE ===== */
+h1 {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #facc15; /* bat-signal yellow */
+  margin-bottom: 50px;
+  text-shadow:
+    0 0 20px rgba(250,204,21,0.35);
+}
+
+/* ===== ORDER CARD ===== */
+.order {
+    max-width: none;
+    width: 100%;
+  margin-bottom: 26px;
+  padding: 22px 24px;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(180deg, #0a0a0a, #050505);
+
+  border: 1px solid rgba(250,204,21,0.15);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.9),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border 0.35s ease;
+}
+
+.order:hover {
+  transform: translateY(-6px);
+  border: 1px solid rgba(250,204,21,0.45);
+  box-shadow:
+    0 30px 90px rgba(0,0,0,1),
+    0 0 40px rgba(250,204,21,0.15);
+}
+
+/* ===== HEADER ===== */
+.order h2 {
+  margin: 0 0 14px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f9fafb;
+  letter-spacing: 0.6px;
+}
+
+/* ===== TEXT ===== */
+.order p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.order b {
+  color: #e5e7eb;
+  font-weight: 600;
+}
+
+/* ===== STATUS SELECT ===== */
+form {
+  margin-top: 14px;
+}
+
+select {
+  appearance: none;
+  background: linear-gradient(180deg, #111, #000);
+  color: #facc15;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+
+  border: 1px solid rgba(250,204,21,0.35);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 10px 25px rgba(0,0,0,0.9);
+
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  box-shadow:
+    0 0 25px rgba(250,204,21,0.45),
+    0 12px 35px rgba(0,0,0,1);
+}
+
+/* ===== PHOTOS ===== */
+.photos {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 12px;
+}
+
+.photos img {
+  height: 90px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+
+  filter: grayscale(25%) contrast(110%);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.85);
+
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.photos img:hover {
+  transform: scale(1.08);
+  filter: grayscale(0%) contrast(120%);
+  box-shadow:
+    0 0 30px rgba(250,204,21,0.35),
+    0 20px 50px rgba(0,0,0,1);
+}
+
+/* ===== EMPTY ===== */
+.order i {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* ===========================
+   STATUS GLOW SYSTEM
+   =========================== */
+
+/* BEKLEMEDE – SARI (BAT-SIGNAL) */
+.order[data-status="beklemede"] {
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(250,204,21,0.35),
+    0 0 35px rgba(250,204,21,0.25);
+}
+
+.order[data-status="beklemede"]:hover {
+  box-shadow:
+    0 30px 90px rgba(0,0,0,1),
+    0 0 55px rgba(250,204,21,0.55);
+}
+
+/* HAZIRLANIYOR – KIRMIZI (ALARM) */
+.order[data-status="hazirlaniyor"] {
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(56,189,248,0.35),
+    0 0 40px rgba(56,189,248,0.35);
+}
+
+.order[data-status="hazirlaniyor"]:hover {
+  box-shadow:
+    0 30px 90px rgba(0,0,0,1),
+    0 0 65px rgba(56,189,248,0.35);
+}
+
+/* TAMAMLANDI – YEŞİL (MISSION COMPLETE) */
+.order[data-status="tamamlandi"] {
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(34,197,94,0.4),
+    0 0 40px rgba(34,197,94,0.35);
+}
+
+.order[data-status="tamamlandi"]:hover {
+  box-shadow:
+    0 30px 90px rgba(0,0,0,1),
+    0 0 65px rgba(34,197,94,0.65);
+}
+
+/* ===========================
+   NEON STATUS BADGE
+   =========================== */
+
+.status-badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow:
+    0 0 12px rgba(255,255,255,0.15),
+    inset 0 0 8px rgba(255,255,255,0.05);
+  transition: all .3s ease;
+}
+
+/* Kart relative olmalı */
+.order {
+  position: relative;
+}
+
+/* 🟡 BEKLEMEDE */
+.order[data-status="beklemede"] .status-badge {
+  color: #fde047;
+  border-color: rgba(253,224,71,0.6);
+  box-shadow:
+    0 0 12px rgba(253,224,71,0.6),
+    0 0 28px rgba(253,224,71,0.4);
+}
+
+/* 🔴 HAZIRLANIYOR */
+.order[data-status="hazirlaniyor"] .status-badge {
+  color: #38bdf8;
+  border-color: rgba(56,189,248,0.6);
+  box-shadow:
+    0 0 14px rgba(56,189,248,0.75),
+    0 0 36px rgba(56,189,248,0.5);
+}
+
+/* 🟢 TAMAMLANDI */
+.order[data-status="tamamlandi"] .status-badge {
+  color: #4ade80;
+  border-color: rgba(74,222,128,0.6);
+  box-shadow:
+    0 0 14px rgba(74,222,128,0.7),
+    0 0 36px rgba(74,222,128,0.5);
+}
+
+/* Hover'da etiket biraz daha parlasın */
+.order:hover .status-badge {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 20px currentColor,
+    0 0 50px currentColor;
+}
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  border: 1px solid transparent;
+  background-size: 300% 300%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(250,204,21,0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(56,189,248,0.08),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      rgba(34,197,94,0.06),
+      transparent 40%
+    );
+
+  animation: ambientPulse 14s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+}
+
+.order::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,0.06),
+      transparent 60%
+    );
+  opacity: .0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+.order:hover::after {
+  opacity: 1;
+}
+
+.order::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(250,204,21,0.0) 20%,
+    rgba(250,204,21,0.9) 35%,
+    rgba(250,204,21,0.2) 50%,
+    rgba(250,204,21,0.9) 65%,
+    rgba(250,204,21,0.0) 80%,
+    transparent 100%
+  );
+
+  background-size: 300% 300%;
+  animation: batEnergyFlow 4.5s linear infinite;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+@keyframes batEnergyFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+.order:hover::before {
+  opacity: 0.9;
+  filter: drop-shadow(0 0 14px rgba(250,204,21,0.75));
+}
+
+.order[data-status="beklemede"]::before {
+  filter: drop-shadow(0 0 18px rgba(250,204,21,0.8));
+}
+
+.order[data-status="hazirlaniyor"]::before {
+  filter: drop-shadow(0 0 18px rgba(234,179,8,0.8));
+}
+
+.order[data-status="tamamlandi"]::before {
+  filter: drop-shadow(0 0 18px rgba(34,197,94,0.7));
+}
+
+/* ===========================
+   DELETE BUTTON – BATMAN STYLE
+   =========================== */
+
+.delete-form {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+}
+
+/* Hover = tehlike hissi */
+.delete-btn:hover {
+  transform: scale(1.1);
+  border-color: rgba(239,68,68,0.8); /* kırmızı alarm */
+  box-shadow:
+    0 0 25px rgba(239,68,68,0.45),
+    0 12px 40px rgba(0,0,0,1);
+}
+
+.delete-btn:hover svg {
+  stroke: #ef4444;
+  filter:
+    drop-shadow(0 0 6px rgba(239,68,68,0.8))
+    drop-shadow(0 0 14px rgba(239,68,68,0.5));
+}
+
+/* Basılıyken */
+.delete-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(239,68,68,0.5);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 12px rgba(239,68,68,0.25),
+    inset 0 0 8px rgba(0,0,0,0.8);
+
+  transition: all .3s ease;
+}
+
+.delete-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ef4444;
+  fill: none;
+  stroke-width: 2;
+}
+
+.delete-btn:hover {
+  box-shadow:
+    0 0 22px rgba(239,68,68,0.6);
+  transform: scale(1.08);
+}
+
+/* ===== MODAL ===== */
+.gotham-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.gotham-modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+}
+
+.modal-box {
+  position: relative;
+  z-index: 2;
+  max-width: 420px;
+  margin: 15vh auto;
+  padding: 30px;
+  border-radius: 18px;
+
+  background: linear-gradient(180deg, #0a0a0a, #050505);
+  border: 1px solid rgba(250,204,21,0.25);
+
+  box-shadow:
+    0 0 60px rgba(250,204,21,0.25),
+    0 40px 120px rgba(0,0,0,1);
+
+  text-align: center;
+}
+
+.modal-box h3 {
+  margin: 0 0 10px;
+  color: #fde047;
+  font-size: 22px;
+}
+
+.modal-box p {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.modal-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-cancel,
+.btn-confirm {
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-cancel {
+  background: #111;
+  color: #9ca3af;
+  border: 1px solid #333;
+}
+
+.btn-confirm {
+  background: linear-gradient(90deg, #7f1d1d, #ef4444);
+  color: #fff;
+  box-shadow: 0 0 30px rgba(239,68,68,0.6);
+}
+
+.gotham-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    position: relative;
+    background: radial-gradient(circle at top, #111 0%, #000 70%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+}
+
+.stat-card .label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    opacity: 0.65;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+.stat-card .value {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1;
+    margin-top: 4px;
+    text-shadow: 0 0 25px currentColor;
+}
+
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent 35%,
+        rgba(255,255,255,0.06),
+        transparent 65%
+    );
+    animation: batsweep 5s linear infinite;
+    pointer-events: none;
+}
+
+.stat-card:hover {
+    box-shadow:
+        0 0 35px currentColor,
+        0 0 60px currentColor;
+}
+
+@media (max-width: 600px) {
+  .gotham-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* STATUS RENKLERİ */
+
+.yellow {
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+    color: #ffc107;
+}
+
+.blue {
+    box-shadow: 0 0 20px rgba(0, 180, 255, 0.6);
+    color: #00b4ff;
+}
+
+.green {
+    box-shadow: 0 0 20px rgba(0, 255, 120, 0.6);
+    color: #00ff78;
+}
+
+.red {
+    box-shadow: 0 0 20px rgba(255, 60, 60, 0.6);
+    color: #ff3c3c;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px currentColor;
+    transition: 0.3s;
+}
+
+/* GROW ANIMATION */
+@keyframes growBar {
+    from { width: 0; }
+}
+
+@keyframes energyFlow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== GOTHAM FILTER BAR ===== */
+.gotham-filter {
+  position: relative;
+  max-width: 900px;
+  margin-bottom: 40px;
+  padding: 18px;
+  border-radius: 18px;
+  background: radial-gradient(circle at center, #0a0a0a, #000);
+  box-shadow:
+    0 0 40px rgba(250,204,21,0.12),
+    inset 0 0 20px rgba(250,204,21,0.05);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  overflow: hidden;
+  margin: 0 auto 40px auto;
+}
+
+/* Radar sweep */
+.radar {
+  position: absolute;
+  inset: 0;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent,
+      rgba(250,204,21,0.15),
+      transparent 40%
+    );
+  animation: radarSweep 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Inputs */
+.gotham-filter input,
+.gotham-filter select {
+  position: relative;
+  z-index: 2;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(250,204,21,0.4);
+  color: #facc15;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  outline: none;
+  box-shadow:
+    inset 0 0 8px rgba(250,204,21,0.15),
+    0 0 20px rgba(0,0,0,0.9);
+}
+
+.gotham-filter input {
+  flex: 1;
+}
+
+.gotham-filter input::placeholder {
+  color: #6b7280;
+}
+
+.gotham-filter input:focus,
+.gotham-filter select:focus {
+  box-shadow:
+    0 0 30px rgba(250,204,21,0.5),
+    inset 0 0 12px rgba(250,204,21,0.3);
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+/* Mobilde tek sütun */
+@media (max-width: 768px) {
+  .orders-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   BATMAN CUSTOM SELECT
+   =========================== */
+
+.bat-select {
+  position: relative;
+  width: fit-content;
+  font-size: 13px;
+  user-select: none;
+  z-index: 20;
+}
+
+.bat-selected {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #111, #000);
+  color: #facc15;
+  font-weight: 600;
+  border: 1px solid rgba(250,204,21,0.4);
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 10px 25px rgba(0,0,0,0.9);
+}
+
+.bat-options {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 6px;
+  display: none;
+  z-index: 50;
+  border: 1px solid rgba(250,204,21,0.25);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,1),
+    0 0 30px rgba(250,204,21,0.15);
+    z-index: 999;
+}
+
+.bat-select.open .bat-options {
+  display: block;
+}
+
+.bat-option {
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.bat-option:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.bat-option:hover {
+  background: rgba(250,204,21,0.12);
+  color: #facc15;
+  box-shadow: inset 0 0 0 1px rgba(250,204,21,0.3);
+}
+
+.bat-select.open .bat-selected,
+.bat-selected:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 25px rgba(250,204,21,0.45),
+    0 12px 35px rgba(0,0,0,1);
+}
+
+.bat-selected {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.stat-card.yellow { color: #facc15; }
+.stat-card.blue   { color: #38bdf8; }
+.stat-card.green  { color: #4ade80; }
+.stat-card.red    { color: #ef4444; }
+
+.theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+.toggle-track {
+  width: 120px;
+  height: 48px;
+  background: #000;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.toggle-icon img {
+  width: 22px;
+  opacity: .5;
+}
+
+.toggle-icon.active img {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #111, #000);
+  border-radius: 50%;
+  left: 4px;
+  transition: all .4s ease;
+  box-shadow: 0 0 20px rgba(250,204,21,.6);
+}
+
+body.theme-jarvis .toggle-thumb {
+  left: 76px;
+  box-shadow: 0 0 25px rgba(56,189,248,.9);
+}
+
+body.theme-jarvis .batman img {
+  opacity: .3;
+}
+
+body.theme-jarvis .iron img {
+  opacity: 1;
+  filter: drop-shadow(0 0 10px #38bdf8);
+}
+
+body.theme-jarvis {
+  background:
+    radial-gradient(circle at top, #06131f, #020617 70%);
+  color: #c7d2fe;
+}
+
+body.theme-jarvis .stat-card {
+  background: linear-gradient(180deg, #050b16, #020617);
+  border: 1px solid rgba(56,189,248,.35);
+  box-shadow:
+    0 0 40px rgba(56,189,248,.25),
+    inset 0 0 30px rgba(56,189,248,.08);
+}
+
+body.theme-jarvis .stat-card .value {
+  color: #38bdf8;
+  text-shadow: 0 0 30px #38bdf8;
+}
+
+body.theme-jarvis .order {
+  background:
+    linear-gradient(180deg, #020617, #020617),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(56,189,248,.05) 22px
+    );
+  border: 1px solid rgba(56,189,248,.4);
+  box-shadow:
+    0 0 50px rgba(56,189,248,.3);
+}
+
+.theme-toggle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  fill: currentColor;
+  transition: all .4s ease;
+}
+
+.hidden {
+  opacity: 0;
+  position: absolute;
+  transform: scale(0.5);
+}
+
+
+/* ===========================
+   MOBILE & TABLET RESPONSIVE
+   =========================== */
+
+/* TABLET */
+@media (max-width: 1024px) {
+  body {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .orders-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  body {
+    padding: 12px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  /* DASHBOARD */
+  .gotham-dashboard {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 18px;
+  }
+
+  .stat-card .value {
+    font-size: 36px;
+  }
+
+  /* FILTER BAR */
+  .gotham-filter {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 0 30px 0;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .gotham-filter input,
+  .gotham-filter select {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    font-size: 15px;
+  }
+
+  /* ORDER CARD */
+  .order {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 18px 16px;
+  }
+
+  .orders-grid {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .order h2 {
+    font-size: 16px;
+  }
+
+  .order p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* STATUS BADGE */
+  .status-badge {
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  /* BAT SELECT */
+  .bat-selected {
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .bat-options {
+    width: 100%;
+  }
+
+  /* PHOTOS */
+  .photos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .photos img {
+    height: 80px;
+  }
+
+  /* DELETE BUTTON */
+  .delete-btn {
+    width: 34px;
+    height: 34px;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .delete-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* MODAL */
+  .modal-box {
+    width: calc(100% - 32px);
+    margin: 20vh auto;
+    padding: 22px;
+  }
+
+  .modal-box h3 {
+    font-size: 20px;
+  }
+}

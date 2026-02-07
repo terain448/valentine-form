@@ -1,0 +1,453 @@
+* {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding:
+    calc(16px + env(safe-area-inset-top))
+    calc(16px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom))
+    calc(16px + env(safe-area-inset-left));
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(0, 113, 227, 0.06),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #f5f5f7 0%,
+      #ededf0 40%,
+      #e6e6eb 100%
+    );
+  color: #1d1d1f;
+}
+
+
+/* Ana kart */
+.container {
+  max-width: 620px;
+  margin: 80px auto;
+  background: #ffffff;
+  padding: 44px;
+  border-radius: 20px;
+  border: 1.5px solid #e5e5e7;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Başlıklar */
+h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+
+.subtitle {
+  color: #6e6e73;
+  margin-bottom: 36px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Label */
+label {
+  display: block;
+  margin-top: 26px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #1d1d1f;
+}
+
+/* Input alanları */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 8px;
+  border-radius: 14px;
+  border: 1.8px solid #d2d2d7;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1d1d1f;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9a9aa0;
+}
+
+/* Focus – Apple hissi */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0071e3;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18);
+}
+
+/* Textarea */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Submit butonu */
+button[type="submit"] {
+    margin-bottom: env(safe-area-inset-bottom);
+  margin-top: 38px;
+  width: 100%;
+  padding: 16px;
+  background: #1d1d1f;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-1px);
+  background: #000;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+}
+
+/* Hata mesajı */
+#errorBox {
+  margin-top: 24px;
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Yardımcılar */
+.hidden {
+  display: none;
+}
+
+.password-wrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.password-wrapper button {
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 46px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  color: #6e6e73; /* Apple gri */
+}
+
+.toggle-password svg {
+    max-width: 100%;
+    max-height: 100%;
+  width: 22px;
+  height: 22px;
+  display: none;
+}
+
+/* varsayılan: gizli */
+.toggle-password .icon-eye-off {
+  display: block;
+}
+
+/* açıkken */
+.toggle-password.visible .icon-eye-off {
+  display: none;
+}
+
+.toggle-password.visible .icon-eye-on {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding:
+    calc(12px + env(safe-area-inset-top))
+    calc(12px + env(safe-area-inset-right))
+    calc(20px + env(safe-area-inset-bottom))
+    calc(12px + env(safe-area-inset-left));
+  }
+
+  .container {
+    margin: 20px auto;
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  label {
+    font-size: 18px;
+    margin-top: 22px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* iOS zoom bug fix */
+    padding: 14px 14px;
+    border-radius: 12px;
+  }
+
+  textarea {
+    min-height: 100px;
+  }
+
+  .password-wrapper input {
+    padding-right: 48px;
+  }
+
+  .toggle-password {
+    right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    margin-top: 32px;
+  }
+
+  #errorBox {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+.theme-toggle {
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top));
+  right: calc(16px + env(safe-area-inset-right));
+  width: 52px;
+  height: 28px;
+  background: #e5e5ea;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 999;
+  transition: background 0.25s ease;
+}
+
+.theme-toggle .icon {
+  font-size: 14px;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.theme-toggle.dark {
+  background: #2c2c2e;
+}
+
+.theme-toggle.dark .moon {
+  opacity: 1;
+}
+
+.theme-toggle:not(.dark) .sun {
+  opacity: 1;
+}
+
+body.dark {
+  background:
+    radial-gradient(circle at top, rgba(255,255,255,0.06), transparent 45%),
+    linear-gradient(180deg, #1c1c1e, #111);
+  color: #f5f5f7;
+}
+
+body.dark .container {
+  background: #1c1c1e;
+  border-color: #2c2c2e;
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.6),
+    0 4px 12px rgba(0,0,0,0.4);
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background: #2c2c2e;
+  border-color: #3a3a3c;
+  color: #f5f5f7;
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #8e8e93;
+}
+
+body.dark label {
+  color: #f5f5f7;
+}
+
+body.dark .subtitle {
+  color: #a1a1a6;
+}
+
+body.dark button[type="submit"] {
+  background: #f5f5f7;
+  color: #000;
+}
+
+.file-upload {
+  position: relative;
+  margin-top: 8px;
+}
+
+.file-upload input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-label {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.8px solid #d2d2d7;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1d1d1f;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark .file-label {
+  background: #2c2c2e;
+  border-color: #3a3a3c;
+  color: #f5f5f7;
+}
+
+.file-upload input[type="file"]:focus + .file-label,
+.file-upload:hover .file-label {
+  border-color: #0071e3;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18);
+}
+
+.photo-preview {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 14px;
+}
+
+.photo-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f5f5f7;
+  border: 1px solid #e5e5e7;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark mode */
+body.dark .photo-card {
+  background: #2c2c2e;
+  border-color: #3a3a3c;
+}
+
+/* mobil */
+@media (max-width: 768px) {
+  .photo-preview {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 12px;
+  }
+}
+
+.photo-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.photo-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f5f5f7;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-photo {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.remove-photo:hover {
+  background: rgba(0,0,0,.8);
+}
+
+label.required::after {
+  content: " (zorunlu)";
+  font-size: 13px;
+  color: #c24a4a;
+}
+

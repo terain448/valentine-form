@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Özel Site Talep Formu</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="theme-toggle" id="themeToggle">
+  <span class="icon moon">🌙</span>
+  <span class="icon sun">☀️</span>
+</div>
+
+<div class="container">
+  <h1>Sevgiliye Özel Site Formu</h1>
+  <p class="subtitle">Lütfen bilgileri eksiksiz ve doğru şekilde doldurun.</p>
+
+  <form id="orderForm" enctype="multipart/form-data" method="POST">
+
+    <!-- Sipariş No -->
+    <label class="required" for="order_number">Sipariş Numarası </label>
+    <p> Tarafınıza iletilen sipariş numarasını giriniz – Örn: #TY-0001  </p>
+    <input type="text" id="order_number" name="order_number" data-required>
+
+    <!-- Paket -->
+    <label class="required" for="package">Satın Aldığınız Paket</label>
+    <select id="package" name="package" data-required>
+      <option value="" disabled selected hidden>Seçiniz</option>
+      <option value="basic">Basic</option>
+      <option value="plus">Plus</option>
+      <option value="premium">Premium</option>
+    </select>
+
+    <!-- İsimler -->
+    <label class="required" for="lover_name">Sevgilinizin Adı </label>
+    <input type="text" id="lover_name" name="lover_name" data-required>
+
+    <label class="required" for="customer_name">Sizin Adınız </label>
+    <input type="text" id="customer_name" name="customer_name" data-required>
+
+    <!-- Mesaj -->
+    <label class="required" for="message">Sitede Yer Almasını İstediğiniz Mesaj </label>
+    <p>Uzun bir mesaj yazabilirsiniz. Yazım ve düzenleme tarafımızdan yapılacaktır. </p>
+    <textarea id="message" name="message" data-required></textarea>
+
+    <!-- Foto -->
+    <label for="photos">Fotoğraf Yükleme</label>
+    <p>Birlikte çekilmiş fotoğraflarınızı yükleyebilirsiniz. </p>
+    <p>(JPG, JPEG, PNG önerilir) </p>
+    <div class="file-upload">
+      <span class="file-label">Görsel Seçiniz</span>
+      <input
+      type="file"
+      name="photos"
+      id="photos"
+      multiple
+      accept=".jpg,.jpeg,.png"
+      />
+    </div>
+
+    <small id="photoHint"></small>
+
+    <div id="photoPreview" class="photo-preview hidden"></div>
+
+    <!-- Tarih -->
+    <label for="special_date" class="required">Özel Tarih</label>
+    <p> Geri sayım eklenmesini istiyorsanız tarih belirtiniz </p>
+    <p>  (Tanışma günü, Sevgililer Günü vb.) </p>
+    <input type="date" id="special_date" name="special_date">
+
+    <!-- Özel İstek -->
+    <label for="custom_request">Özel İstekler</label>
+    <p>(Örn: Renk, müzik, animasyon, gizlilik, şifre vb. taleplerinizi yazabilirsiniz.)</p>
+    <textarea id="custom_request" name="custom_request"></textarea>
+
+    <!-- Arka Plan Müziği -->
+    <label class="required" for="musicChoice">Arka plan müziği istiyor musunuz?</label>
+    <select name="music_choice" id="musicChoice" data-required>
+      <option value="" disabled selected hidden>Seçiniz</option>
+      <option value="no">Hayır</option>
+      <option value="yes">Evet</option>
+    </select>
+
+    <div id="musicArea" class="hidden">
+      <label for="music_detail" class="required">Müzik Detayı</label>
+      <p>
+        Spotify / YouTube linki ekleyebilir veya istediğiniz müziği açıklayabilirsiniz.
+      </p>
+      <textarea
+        id="music_detail"
+        name="music_detail"
+        placeholder="Örn: https://open.spotify.com/track/..."
+      ></textarea>
+    </div>
+
+    <!-- Şifre -->
+    <label class="required" for="passwordChoice">Site için şifre istiyor musunuz? </label>
+    <select name="password_choice" id="passwordChoice" data-required>
+      <option value="" disabled selected hidden>Seçiniz</option>
+      <option value="no">Hayır</option>
+      <option value="yes">Evet</option>
+    </select>
+
+    <div id="passwordArea" class="hidden">
+      <label class="required">Şifre Belirleyiniz</label>
+      <div class="password-wrapper">
+        <input
+          type="password"
+          name="site_password"
+          id="sitePassword"
+          placeholder="••••••••"
+        />
+
+        <span class="toggle-password" id="togglePassword">
+          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19
+                    c-7 0-11-7-11-7
+                    a21.82 21.82 0 0 1 5.06-5.94"/>
+            <path d="M1 1l22 22"/>
+            <path d="M9.53 9.53
+                    A3.5 3.5 0 0 0 12 15.5
+                    a3.5 3.5 0 0 0 2.47-5.97"/>
+          </svg>
+
+            <svg class="icon-eye-on" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-7 11-7
+                      11 7 11 7
+                      -4 7 -11 7
+                      S1 12 1 12z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- İletişim -->
+    <label class="required" for="contact">İletişim Bilgisi </label>
+    <p>Instagram kullanıcı adı veya WhatsApp numarası. </p>
+    <input type="text" id="contact" name="contact" data-required>
+
+    <div id="errorBox"></div>
+
+    <button type="submit">Formu Gönder</button>
+
+  </form>
+</div>
+
+<script type="application/json" id="package-data">
+  {{ packages | tojson }}
+</script>
+
+<script>
+  const PACKAGE_LIMITS = JSON.parse(
+    document.getElementById("package-data").textContent
+  );
+</script>
+
+
+<script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="static/admin.css">
+  <title>Admin Panel</title>
+
+</head>
+<body>
+
+<div class="gotham-dashboard">
+
+  <div class="stat-card yellow">
+    <span class="label">Beklemede</span>
+    <span class="value" id="stat-beklemede">0</span>
+  </div>
+
+  <div class="stat-card blue">
+    <span class="label">Hazırlanıyor</span>
+    <span class="value" id="stat-hazirlaniyor">0</span>
+  </div>
+
+  <div class="stat-card green">
+    <span class="label">Tamamlandı</span>
+    <span class="value" id="stat-tamamlandi">0</span>
+  </div>
+
+</div>
+
+<div class="gotham-filter">
+  <div class="radar"></div>
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔍"
+  >
+
+  <select id="statusFilter" name="status">
+    <option value="beklemede">Beklemede</option>
+    <option value="hazirlaniyor">Hazırlanıyor</option>
+    <option value="tamamlandi">Tamamlandı</option>
+    <option value="iptal">İptal</option>
+  </select>
+
+</div>
+
+
+<h1>📋 Admin Panel – Siparişler</h1>
+<div class="orders-grid">
+{% for o in orders %}
+  <div class="order" data-status="{{ o[9] }}">
+    <div class="order-type">
+      {% if o[12] == "valentine" %}
+        💝 Sevgiliye Özel Site
+      {% else %}
+        📦 Genel Sipariş
+      {% endif %}
+
+    </div>
+
+    <div class="status-badge">
+      {{ o[9] }}
+  </div>
+
+    <h2>#{{ o[1] }} ({{ o[2] }})</h2>
+
+    <p><b>Sevgili:</b> {{ o[3] }}</p>
+    <p><b>Müşteri:</b> {{ o[4] }}</p>
+    <p><b>Mesaj:</b> {{ o[5] }}</p>
+    <p><b>İletişim:</b> {{ o[8] }}</p>
+    <p><b>Özel Tarih:</b> {{ o[11] or "-" }}</p>
+    <p><b>Kayıt Tarihi:</b> {{ o[10] }}</p>
+    {% if o[6] == "yes" %}
+      <p><b>🎵 Müzik:</b> Var</p>
+      {% if o[7] %}
+        <p class="music-detail">{{ o[7] }}</p>
+      {% endif %}
+    {% else %}
+      <p><b>🎵 Müzik:</b> Yok</p>
+    {% endif %}
+
+
+    
+    <form method="POST" action="/update-status" style="margin-top: 10px;">
+      <input type="hidden" name="order_id" value="{{ o[0] }}">
+
+      <label><b>Durum:</b></label>
+      <div class="bat-select" data-name="status">
+        <div class="bat-selected">{{ o[9] }}</div>
+        <div class="bat-options">
+          <div class="bat-option" data-value="beklemede">Beklemede</div>
+          <div class="bat-option" data-value="hazirlaniyor">Hazırlanıyor</div>
+          <div class="bat-option" data-value="tamamlandi">Tamamlandı</div>
+        </div>
+      </div>
+
+      <input type="hidden" name="status" value="{{ o[7] }}">
+
+    </form>
+
+
+    {% if photo_map.get(o[0]) %}
+      <div class="photos">
+        {% for img in photo_map[o[0]] %}
+          <img src="/uploads/{{ img }}" loading="lazy">
+        {% endfor %}
+      </div>
+    {% else %}
+      <p><i>Fotoğraf yok</i></p>
+    {% endif %}
+    <form method="POST" action="/delete-order" class="delete-form">
+      <input type="hidden" name="order_id" value="{{ o[0] }}">
+      <button type="button" class="delete-btn" data-order="{{ o[0] }}">
+        <!-- SVG ÇÖP KUTUSU -->
+        <svg viewBox="0 0 24 24">
+          <path d="M3 6h18M9 6v12m6-12v12M5 6l1 14h12l1-14M8 6l1-3h6l1 3"/>
+        </svg>
+      </button>
+    </form>
+
+
+  </div>
+{% endfor %}
+</div>
+<!-- GOTHAM CONFIRM MODAL -->
+<div id="confirmModal" class="gotham-modal hidden">
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <h3>Are you sure?</h3>
+    <p>This order will be permanently deleted.</p>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancelDelete">Cancel</button>
+      <button class="btn-confirm" id="confirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let activeForm = null;
+
+document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeForm = btn.closest("form");
+    document.getElementById("confirmModal").classList.remove("hidden");
+  });
+});
+
+document.getElementById("cancelDelete").onclick = () => {
+  document.getElementById("confirmModal").classList.add("hidden");
+  activeForm = null;
+};
+
+document.getElementById("confirmDelete").onclick = () => {
+  if (activeForm) activeForm.submit();
+};
+</script>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const orders = document.querySelectorAll(".order");
+
+function filterOrders() {
+  const text = searchInput.value.toLowerCase();
+  const status = statusFilter.value;
+
+  orders.forEach(card => {
+    const content = card.innerText.toLowerCase();
+    const cardStatus = card.dataset.status;
+
+    const matchText = content.includes(text);
+    const matchStatus = !status || cardStatus === status;
+
+    card.style.display = (matchText && matchStatus)
+      ? "block"
+      : "none";
+  });
+}
+
+searchInput.addEventListener("input", filterOrders);
+statusFilter.addEventListener("change", filterOrders);
+</script>
+
+<script>
+document.querySelectorAll(".bat-select").forEach(select => {
+  const selected = select.querySelector(".bat-selected");
+  const options = select.querySelectorAll(".bat-option");
+  const hiddenInput = select.nextElementSibling;
+
+  selected.addEventListener("click", () => {
+    select.classList.toggle("open");
+  });
+
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      selected.innerText = opt.innerText;
+      hiddenInput.value = opt.dataset.value;
+      select.closest("form").submit();
+    });
+  });
+});
+
+document.addEventListener("click", e => {
+  document.querySelectorAll(".bat-select").forEach(s => {
+    if (!s.contains(e.target)) s.classList.remove("open");
+  });
+});
+</script>
+
+<script>
+async function refreshDashboard() {
+  try {
+    const res = await fetch("/api/stats");
+    const stats = await res.json();
+
+    document.getElementById("stat-beklemede").textContent = stats.beklemede;
+    document.getElementById("stat-hazirlaniyor").textContent = stats.hazirlaniyor;
+    document.getElementById("stat-tamamlandi").textContent = stats.tamamlandi;
+    document.getElementById("stat-iptal").textContent = stats.iptal;
+  } catch (e) {
+    console.error("Dashboard stats error:", e);
+  }
+}
+
+// sayfa açılınca bir kez
+refreshDashboard();
+
+// her 5 saniyede bir
+setInterval(refreshDashboard, 5000);
+</script>
+
+<script>
+const toggle = document.getElementById("themeToggle");
+
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("theme-jarvis");
+  document.body.classList.toggle("theme-batman");
+});
+</script>
+
+
+</body>
+</html>
