@@ -451,3 +451,12 @@ label.required::after {
   color: #c24a4a;
 }
 
+#successMessage {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#successMessage h2 {
+    color: #2e7d32;
+    margin-bottom: 12px;
+}
