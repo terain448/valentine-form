@@ -130,7 +130,8 @@ photoInput.addEventListener("change", () => {
 
 
 /* Form submit */
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
   errorBox.innerHTML = "";
   let errors = [];
 
@@ -138,31 +139,29 @@ form.addEventListener("submit", (e) => {
     if (!el.value.trim()) {
       const label = document.querySelector(`label[for="${el.id}"]`);
       const labelText = label ? label.textContent : "Bu alan";
-
       errors.push(`"${labelText}" alanı boş bırakılamaz`);
     }
   });
 
-  const selectedPackage = packageSelect.value;
-  const maxPhotos = limits[selectedPackage];
-
-  if (photoInput.files.length > maxPhotos) {
-    errors.push(
-      `Seçilen paket için maksimum ${maxPhotos} fotoğraf yükleyebilirsiniz`
-    );
-  }
-
   if (errors.length) {
-    e.preventDefault();
     errorBox.innerHTML = errors.join("<br>");
     return;
   }
 
-  // ✅ HATA YOK → SUCCESS
-  e.preventDefault(); // sayfa yenilenmesin
+  const response = await fetch("/submit", {
+    method: "POST",
+    body: new FormData(form)
+  });
 
-  form.style.display = "none";
-  document.getElementById("successMessage").style.display = "block";
+  if (!response.ok) {
+    errorBox.innerHTML = "Bir hata oluştu, lütfen tekrar deneyin.";
+    return;
+  }
+
+  // ✅ SUCCESS
+  form.classList.add("hidden");
+  document.getElementById("successMessage").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 
