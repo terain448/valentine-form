@@ -2,7 +2,12 @@ from flask import Flask, abort, render_template, request, redirect, send_from_di
 from werkzeug.utils import secure_filename
 import sqlite3, os
 
+ADMIN_KEY = os.getenv("ADMIN_KEY", "448848")
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+
+
 app = Flask(__name__)
+app.secret_key = SECRET_KEY
 
 # -------------------------
 # Upload ayarları
@@ -189,7 +194,7 @@ def render_admin(where=None, params=()):
 # -------------------------
 @app.route("/admin")
 def admin():
-    if request.args.get("key") != "448848":
+    if request.args.get("key") != ADMIN_KEY:
         abort(403)
     return render_admin()
 
@@ -260,6 +265,3 @@ def delete_order():
     con.close()
     return redirect("/admin")
 
-# -------------------------
-if __name__ == "__main__":
-    app.run()
